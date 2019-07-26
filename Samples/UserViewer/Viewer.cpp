@@ -17,6 +17,14 @@
 #define MIN_NUM_CHUNKS(data_size, chunk_size)	((((data_size)-1) / (chunk_size) + 1))
 #define MIN_CHUNKS_SIZE(data_size, chunk_size)	(MIN_NUM_CHUNKS(data_size, chunk_size) * (chunk_size))
 
+#define RS2_PROJECT_POINT_TO_PIXEL 0x1000
+
+struct Rs2PointPixel
+{
+	float point[3];
+	float pixel[2];
+};
+
 SampleViewer* SampleViewer::ms_self = NULL;
 
 bool g_drawSkeleton = true;
@@ -28,6 +36,21 @@ bool g_drawDepth = true;
 bool g_drawFrameId = false;
 
 int g_nXRes = 0, g_nYRes = 0;
+
+void projectPointToPixel(float x, float y, float z, float* pOutX, float* pOutY)
+{
+	Rs2PointPixel proj;
+	memset(&proj, 0, sizeof(proj));
+	proj.point[0] = x;
+	proj.point[1] = y;
+	proj.point[2] = z;
+
+	SampleViewer* viewer = SampleViewer::GetInstance();
+	viewer->GetDevice().invoke(RS2_PROJECT_POINT_TO_PIXEL, (void*)&proj, (int)sizeof(proj));
+
+	*pOutX = proj.pixel[0];
+	*pOutY = g_nYRes - proj.pixel[1];
+}
 
 // time to hold in pose to exit program. In milliseconds.
 const int g_poseTimeoutToExit = 2000;
@@ -246,8 +269,8 @@ void DrawBoundingBox(const nite::UserData& user)
 void DrawLimb(nite::UserTracker* pUserTracker, const nite::SkeletonJoint& joint1, const nite::SkeletonJoint& joint2, int color)
 {
 	float coordinates[6] = {0};
-	pUserTracker->convertJointCoordinatesToDepth(joint1.getPosition().x, joint1.getPosition().y, joint1.getPosition().z, &coordinates[0], &coordinates[1]);
-	pUserTracker->convertJointCoordinatesToDepth(joint2.getPosition().x, joint2.getPosition().y, joint2.getPosition().z, &coordinates[3], &coordinates[4]);
+	projectPointToPixel(joint1.getPosition().x, joint1.getPosition().y, joint1.getPosition().z, &coordinates[0], &coordinates[1]);
+	projectPointToPixel(joint2.getPosition().x, joint2.getPosition().y, joint2.getPosition().z, &coordinates[3], &coordinates[4]);
 
 	coordinates[0] *= GL_WIN_SIZE_X/g_nXRes;
 	coordinates[1] *= GL_WIN_SIZE_Y/g_nYRes;

@@ -20,6 +20,8 @@ public:
 
 	virtual openni::Status Init(int argc, char **argv);
 	virtual openni::Status Run();	//Does not return
+	static SampleViewer* GetInstance() { return ms_self; }
+	openni::Device& GetDevice() { return m_device; }
 
 protected:
 	virtual void Display();

@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 2.8)
 
 project(bone)
 
-set(OPENNI2_INC "/home/cy8182/repos/OpenNI-Linux-x64-2.3/Include")
-set(NITE2_INC "/home/cy8182/repos/NiTE-2.0.0/Include")
-set(OPENNI2_LIB "/home/cy8182/repos/OpenNI-Linux-x64-2.3/Redist")
-set(NITE2_LIB "/home/cy8182/repos/NiTE-2.0.0/Redist")
+set(OPENNI2_INC "/home/cy8182/backup/OpenNI-Linux-x64-2.3/Include")
+set(NITE2_INC "/home/cy8182/backup/NiTE-2.0.0/Include")
+set(OPENNI2_LIB "/home/cy8182/backup/OpenNI-Linux-x64-2.3/Redist")
+set(NITE2_LIB "/home/cy8182/backup/NiTE-2.0.0/Redist")
 
 find_package(OpenCV REQUIRED)
 find_package(OpenGL REQUIRED)

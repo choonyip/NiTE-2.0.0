@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/bone.dir/main.cpp.o"
   "CMakeFiles/bone.dir/Viewer.cpp.o"
-  "bone.pdb"
+  "CMakeFiles/bone.dir/main.cpp.o"
   "bone"
+  "bone.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

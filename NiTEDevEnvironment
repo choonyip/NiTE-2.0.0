@@ -1,2 +1,2 @@
-export NITE2_INCLUDE=/home/cy8182/repos/NiTE-2.0.0/Include
-export NITE2_REDIST64=/home/cy8182/repos/NiTE-2.0.0/Redist
+export NITE2_INCLUDE=/home/cy8182/backup/NiTE-2.0.0/Include
+export NITE2_REDIST64=/home/cy8182/backup/NiTE-2.0.0/Redist
